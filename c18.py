@@ -49,10 +49,17 @@ origdata=open("input-19").read()
 
 print len(origdata)
 
+#DES = pyDes.des("tuenti\0\0",pyDes.ECB)
 DES = pyDes.des("tuenti\0\0")
 data = DES.decrypt(origdata)
 data = "".join([chr(third_transformation(ord(d))) for d in data])
 data = xor(data,"tuenti")
+
+for i in xrange(96):
+    string = map(lambda x: ((ord(x) + i - 32) % 96) + 32, data)
+    print ''.join(map(chr,string))
+
+assert 0
 
 
 for us in ("TUENTITU","tuentitu","tuenti\0\0","TUENTI\0\0","\0TUENTI\0","\0\0TUENTI","\0tuenti\0","\0\0TUENTI","tuenti20",chr(20)*8,"\x14\0\0\0\0\0\0\0","\0\0\0\0\0\0\0\x14","\0\0\0\0\0\0\x14\0",):
